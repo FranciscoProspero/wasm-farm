@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>🌱🍐Hortinha🍆🍓</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    
+    <noscript>This page contains webassembly and javascript content, please enable javascript in your browser.</noscript>
+    <script src="./bootstrap.js"></script>
+    <h1>🌱🍐 Hortinha 🍆🍓</h1>
+    <p>Monitor the food you produced!</p>   
+
+    <div class="flex-container">
+      <div class="flex-child left"> 
+        <h2>Add item</h2>
+        
+        <textarea id="vegetable" placeholder="Vegetable" rows="2"></textarea>
+        <textarea id="amount" placeholder="Number of Vegetables, 0 if not countable" rows="2"></textarea>
+        <textarea id="weight" placeholder="Weight in grams" rows="2"></textarea>
+        <input type="date" id="date" name="date">
+  
+        <button type="button" id="store_value"> <span id="copy-button-feedback"></span>🍍 Add </button>
+
+      </div>
+      <div class="flex-child right"> 
+        <div class="data-table">
+          <table id="data-table">
+            <colgroup>
+              <col style="width: 35%;">
+              <col style="width: 15%;">
+              <col style="width: 20%;">
+              <col style="width: 30%;">
+          </colgroup>
+            <thead>
+              <tr>
+                <th>Vegetable</th>
+                <th>Amount</th>
+                <th>Weight (g)</th>
+                <th>Date Picked</th>
+              </tr>
+            </thead>
+            <tbody id="data-table-body">
+              <!-- Table rows will be added dynamically here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      Made with 🍆 by <a href="https://github.com/FranciscoProspero">Francisco Prospero</a>
+    </footer>
+ 
+  </body>
+</html>
