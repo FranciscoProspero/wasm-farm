@@ -6,6 +6,7 @@ console.log("demo")
 const store_value_button = document.getElementById('store_value')
 
 const vegetable_text = document.getElementById('vegetable')
+const species_text = document.getElementById('species')
 const amount_text = document.getElementById('amount')
 const weight_text = document.getElementById('weight')
 const selected_date = document.getElementById('date')
@@ -16,7 +17,7 @@ var update_table = true
 
 const text_handler = async function(e) {
     console.log("handle text")
-    await wasm.add_to_db(vegetable_text.value, amount_text.value, weight_text.value, selected_date.value)
+    await wasm.add_to_db(vegetable_text.value, species_text.value, amount_text.value, weight_text.value, selected_date.value)
     update_table = true
     clearInterval(myTimer);
     myTimer = setInterval(update_table_data, 1000);
@@ -40,19 +41,22 @@ async function updateData() {
 
 const addRowToTable = (table, rowData) => {
     const newRow = table.insertRow();
-    const { vegetable, number_of_veg, weight, date_picked } = rowData;
+    const { vegetable, species, number_of_veg, weight, date_picked } = rowData;
   
     const cell1 = newRow.insertCell(0);
     cell1.textContent = vegetable;
   
     const cell2 = newRow.insertCell(1);
-    cell2.textContent = number_of_veg;
-  
+    cell2.textContent = species;
+
     const cell3 = newRow.insertCell(2);
-    cell3.textContent = weight;
+    cell3.textContent = number_of_veg;
   
     const cell4 = newRow.insertCell(3);
-    cell4.textContent = date_picked;
+    cell4.textContent = weight;
+  
+    const cell5 = newRow.insertCell(4);
+    cell5.textContent = date_picked;
 };
 
 // script.js
@@ -79,3 +83,39 @@ async function updateTableWithWasmData() {
     clearInterval(myTimer);
 }
   
+
+const toggleToAdd = document.getElementById("add_element");
+const toggleToStats = document.getElementById("statistics");
+
+const statDiv = document.getElementById("div2");
+const rightDiv = document.getElementById("right-child"); // Use div1 instead of flex-container
+const leftDiv = document.getElementById("left-child");
+
+// Initially hide the statDiv
+hide(statDiv);
+hide(toggleToAdd);
+
+toggleToStats.addEventListener("click", () => {
+  hide(toggleToStats);
+  hide(rightDiv);
+  hide(leftDiv);
+  show(toggleToAdd);
+  show(statDiv);
+});
+
+toggleToAdd.addEventListener("click", () => {
+  hide(statDiv);
+  hide(toggleToAdd);
+  show(toggleToStats);
+  show(leftDiv);
+  show(rightDiv);
+  //show(addVegDiv);
+});
+
+function hide(el) {
+  el.style.setProperty("display", "none");
+}
+
+function show(el) {
+  el.style.setProperty("display", "block");
+}

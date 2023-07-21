@@ -102,7 +102,7 @@
   h5,
   h6 {
     margin-bottom: 12px;
-    margin-top: 24px;
+    margin-top: 12px;
   }
   
   h1 {
@@ -810,7 +810,7 @@
   }
 
   .flex-child {
-      flex: 1;
+    flex-shrink: 3;
   }  
 
   .flex-child:first-child {
@@ -818,7 +818,7 @@
   } 
 
   .data-table {
-    height: calc(100vh - 225px); /* Set the desired fixed height */
+    height: calc(100vh - 250px); /* Set the desired fixed height */
     overflow: auto; /* Use "scroll" to always show scrollbars or "auto" to show scrollbars only when needed */
   }
 
@@ -836,3 +836,15 @@
   .flex-child.right {
     flex-basis: 66.66%;
   }
+
+  .button1 {
+    background-color: #f5f5f5; /* Set the button background color */
+    color: #333; /* Set the text color */
+    border: 1px solid #ccc; /* Add a light border around the button */
+    border-top: none; /* Remove the top border */
+    border-radius: 5px 5px 0 0; /* Set rounded corners on the top */
+    padding: 10px 20px; /* Add some padding to the button */
+    cursor: pointer; /* Show a pointer cursor on hover */
+    width: 25%;
+  }
+

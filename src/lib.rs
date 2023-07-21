@@ -52,6 +52,7 @@ struct Hit {
 #[derive(Debug, Deserialize, Serialize)]
 struct Source {
     number_of_veg: Option<String>,
+    species: Option<String>,
     date_picked: Option<String>,
     weight: Option<String>,
     vegetable: Option<String>,
@@ -69,19 +70,19 @@ pub fn greet() {
 }
 
 #[wasm_bindgen]
-pub async fn add_to_db(veg_name: String, nr: String, weight: String, date_picked: String) -> String {
-    match send_data_to_elasticsearch(&veg_name.as_str(), &nr.as_str(), &weight.as_str(), &date_picked.as_str()).await {
+pub async fn add_to_db(veg_name: String, species: String, nr: String, weight: String, date_picked: String) -> String {
+    match send_data_to_elasticsearch(&veg_name.as_str(), &species.as_str() , &nr.as_str(), &weight.as_str(), &date_picked.as_str()).await {
         Ok(result) => result.text().await.unwrap(),
         Err(_) => "Shit happened".to_string()
     }
 }
 
-async fn send_data_to_elasticsearch(veg: &str, nr_of_veg: &str, weight: &str, date_picked: &str) -> Result<Response, Error> {
+async fn send_data_to_elasticsearch(veg: &str, species: &str, nr_of_veg: &str, weight: &str, date_picked: &str) -> Result<Response, Error> {
     let client = Client::new();
 
     let url = "http://192.168.0.250:9234/hor/_doc";
     // Replace <elasticsearch_server>, <port>, and <index> with the appropriate values
-    let json_data = json!({ "vegetable": veg, "number_of_veg":  nr_of_veg, "weight": weight, "date_picked": date_picked});
+    let json_data = json!({ "vegetable": veg, "species": species, "number_of_veg":  nr_of_veg, "weight": weight, "date_picked": date_picked});
     let response = client
         .post(url)
         .header("Content-Type", "application/json")
@@ -116,7 +117,7 @@ async fn get_data_from_elasticsearch() -> Result<Response, Error> {
         "query": {
             "match_all": {}
         },
-        "_source": ["vegetable", "number_of_veg", "weight", "date_picked"],
+        "_source": ["vegetable", "species", "number_of_veg", "weight", "date_picked"],
         "size": 1000 // Set the size to the number of documents you want to retrieve (e.g., 1000)
     });
 
@@ -150,6 +151,9 @@ async fn query_all_data() -> JsValue  {
     for hit in parsed_data.hits.hits {
         if let Some(vegetable) = hit._source.vegetable {
             small_vec.push(vegetable);
+        }
+        if let Some(species) = hit._source.species {
+            small_vec.push(species);
         }
         if let Some(number_of_veg) = hit._source.number_of_veg {
             small_vec.push(number_of_veg);
