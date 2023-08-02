@@ -83,6 +83,7 @@ async function updateTableWithWasmData() {
     clearInterval(myTimer);
 }
   
+const stat_text = document.getElementById('wait')
 
 const toggleToAdd = document.getElementById("add_element");
 const toggleToStats = document.getElementById("statistics");
@@ -91,17 +92,23 @@ const statDiv = document.getElementById("div2");
 const rightDiv = document.getElementById("right-child"); // Use div1 instead of flex-container
 const leftDiv = document.getElementById("left-child");
 
+
+
+const stat_handler = async function(e) {
+  hide(rightDiv);
+  hide(leftDiv);
+  hide(toggleToStats);
+  show(toggleToAdd);
+  show(statDiv);
+  stat_text.value = await wasm.stattest();
+}
+
 // Initially hide the statDiv
 hide(statDiv);
 hide(toggleToAdd);
 
-toggleToStats.addEventListener("click", () => {
-  hide(toggleToStats);
-  hide(rightDiv);
-  hide(leftDiv);
-  show(toggleToAdd);
-  show(statDiv);
-});
+toggleToStats.addEventListener("click", stat_handler);
+
 
 toggleToAdd.addEventListener("click", () => {
   hide(statDiv);
